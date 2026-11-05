@@ -2,6 +2,8 @@
 
 Prototipo estático en español para una web de comparativas y guías de bienestar para perros adultos.
 
+El comparador incluye una primera selección de camas, escaleras, rampas, arneses, carrito, suplemento articular y productos de higiene. Los enlaces de Amazon son búsquedas ordinarias, no enlaces de afiliado ni garantía de disponibilidad. El comparador no muestra precios copiados: el usuario consulta el importe vigente en Amazon.
+
 ## Ejecutar
 
 Abre `index.html` en el navegador. No necesita dependencias ni proceso de compilación.
