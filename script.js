@@ -54,6 +54,7 @@ let currentFilter = 'Todos';
 const selectedProducts = new Set();
 const grid = document.querySelector('#product-grid');
 const comparisonOutput = document.querySelector('#comparison-output');
+const comparisonPicker = document.querySelector('#comparison-picker');
 
 function art(type) {
   if (type === 'harness') return '<div class="illustration harness-illo"><span class="strap"></span><span class="strap s2"></span><span class="ring"></span><span class="support"></span></div>';
@@ -92,6 +93,18 @@ function renderComparison() {
   comparisonOutput.innerHTML = `<table class="comparison-table"><thead><tr><th scope="col">Detalle</th>${chosen.map(product => `<th scope="col"><span class="table-category">${product.category}</span><b>${product.name}</b><a href="${amazonProduct(product)}" target="_blank" rel="noopener noreferrer nofollow">Ver en Amazon ↗</a></th>`).join('')}</tr></thead><tbody>${rows.map(row => `<tr><th scope="row">${row}</th>${chosen.map(product => `<td>${row === 'Categoría' ? product.category : (product.details[row] || '—')}</td>`).join('')}</tr>`).join('')}</tbody></table><p class="comparison-footnote">La disponibilidad y las variantes pueden cambiar. Confirma los detalles en la ficha del producto.</p>`;
 }
 
+function renderPicker() {
+  const selected = [...selectedProducts];
+  comparisonPicker.innerHTML = Array.from({ length: 4 }, (_, index) => {
+    const value = selected[index] || '';
+    const options = products.map(product => {
+      const usedElsewhere = selected.includes(product.id) && product.id !== value;
+      return `<option value="${product.id}" ${product.id === value ? 'selected' : ''} ${usedElsewhere ? 'disabled' : ''}>${product.name}</option>`;
+    }).join('');
+    return `<label class="compare-pick"><span>PRODUCTO ${index + 1}</span><select data-compare-slot="${index}" aria-label="Producto ${index + 1} para comparar"><option value="">${index < 2 ? 'Elige un producto' : 'Añadir otro (opcional)'}</option>${options}</select></label>`;
+  }).join('');
+}
+
 document.querySelectorAll('.filter').forEach(button => button.addEventListener('click', () => {
   document.querySelector('.filter.active')?.classList.remove('active');
   button.classList.add('active');
@@ -111,12 +124,24 @@ grid.addEventListener('change', event => {
   }
   if (checkbox.checked) selectedProducts.add(checkbox.dataset.selectProduct);
   else selectedProducts.delete(checkbox.dataset.selectProduct);
+  renderPicker();
+  renderComparison();
+});
+
+comparisonPicker.addEventListener('change', event => {
+  if (!event.target.matches('[data-compare-slot]')) return;
+  const values = [...comparisonPicker.querySelectorAll('[data-compare-slot]')].map(select => select.value).filter(Boolean);
+  selectedProducts.clear();
+  values.forEach(id => selectedProducts.add(id));
+  renderProducts();
+  renderPicker();
   renderComparison();
 });
 
 document.querySelector('#clear-comparison').addEventListener('click', () => {
   selectedProducts.clear();
   renderProducts();
+  renderPicker();
   renderComparison();
 });
 
@@ -132,5 +157,6 @@ document.querySelectorAll('#main-nav a').forEach(link => link.addEventListener('
 }));
 
 renderProducts();
+renderPicker();
 renderComparison();
 
