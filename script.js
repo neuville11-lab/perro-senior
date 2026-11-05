@@ -51,11 +51,23 @@ const products = [
 ];
 
 let currentFilter = 'Todos';
-const selectedProducts = new Set();
 const grid = document.querySelector('#product-grid');
 const comparisonOutput = document.querySelector('#comparison-output');
 const comparisonPicker = document.querySelector('#comparison-picker');
 const comparisonCount = document.querySelector('#comparison-count');
+const selectionStorageKey = 'perroSenior.compareSelection';
+const selectedProducts = new Set();
+try {
+  const savedSelection = JSON.parse(localStorage.getItem(selectionStorageKey) || '[]');
+  savedSelection.filter(id => products.some(product => product.id === id)).forEach(id => selectedProducts.add(id));
+} catch { /* local comparison still works if storage is unavailable */ }
+const incomingProduct = new URLSearchParams(window.location.search).get('producto');
+if (comparisonPicker && selectedProducts.size < 4 && products.some(product => product.id === incomingProduct)) selectedProducts.add(incomingProduct);
+if (comparisonPicker && incomingProduct) window.history.replaceState(null, '', `${window.location.pathname}#comparador`);
+function saveSelection() {
+  try { localStorage.setItem(selectionStorageKey, JSON.stringify([...selectedProducts])); } catch { /* selection remains in memory for this visit */ }
+}
+saveSelection();
 
 function art(type) {
   if (type === 'harness') return '<div class="illustration harness-illo"><span class="strap"></span><span class="strap s2"></span><span class="ring"></span><span class="support"></span></div>';
@@ -71,6 +83,7 @@ function amazonProduct(product) {
 }
 
 function renderProducts() {
+  if (!grid) return;
   const visibleProducts = products.filter(product => currentFilter === 'Todos' || product.category === currentFilter);
   grid.innerHTML = visibleProducts.map((product, index) => `<article class="product-card" style="--delay:${index * 35}ms">
     <div class="product-art art-${product.type}">${art(product.type)}<span class="product-badge">${product.category.toUpperCase()}</span><span class="photo-note">Foto oficial pendiente</span></div>
@@ -78,7 +91,7 @@ function renderProducts() {
       <div class="product-detail"><span>ENCAJA SI</span><b>${product.ideal}</b></div>
       <div class="product-footer"><span class="example-price">Precio: consultar en Amazon</span><a class="product-link" href="${amazonProduct(product)}" target="_blank" rel="noopener noreferrer nofollow">Ver producto en Amazon <span>↗</span></a></div>
       <div class="history-link">Ficha: <a href="${product.sourceUrl}" target="_blank" rel="noopener noreferrer">${product.source} ↗</a></div>
-      <label class="compare-choice"><input type="checkbox" data-select-product="${product.id}" ${selectedProducts.has(product.id) ? 'checked' : ''}><span>Añadir al comparador</span></label>
+      <a class="compare-choice-link" href="comparador.html?producto=${product.id}#comparador">Comparar este producto <span>↗</span></a>
     </div></article>`).join('');
 }
 
@@ -110,45 +123,29 @@ document.querySelectorAll('.filter').forEach(button => button.addEventListener('
   renderProducts();
 }));
 
-grid.addEventListener('change', event => {
-  const checkbox = event.target.closest('[data-select-product]');
-  if (!checkbox) return;
-  if (checkbox.checked && selectedProducts.size >= 4) {
-    checkbox.checked = false;
-    comparisonOutput.className = 'comparison-empty comparison-limit';
-    comparisonOutput.textContent = 'Puedes comparar hasta cuatro productos a la vez.';
-    window.setTimeout(renderComparison, 1800);
-    return;
-  }
-  if (checkbox.checked) selectedProducts.add(checkbox.dataset.selectProduct);
-  else selectedProducts.delete(checkbox.dataset.selectProduct);
-  renderPicker();
-  renderComparison();
-});
-
-comparisonPicker.addEventListener('click', event => {
+if (comparisonPicker) comparisonPicker.addEventListener('click', event => {
   const button = event.target.closest('[data-picker-product]');
   if (!button || button.disabled) return;
   const id = button.dataset.pickerProduct;
   if (selectedProducts.has(id)) selectedProducts.delete(id);
   else if (selectedProducts.size < 4) selectedProducts.add(id);
-  renderProducts();
+  saveSelection();
   renderPicker();
   renderComparison();
 });
 
-comparisonOutput.addEventListener('click', event => {
+if (comparisonOutput) comparisonOutput.addEventListener('click', event => {
   const button = event.target.closest('[data-remove-product]');
   if (!button) return;
   selectedProducts.delete(button.dataset.removeProduct);
-  renderProducts();
+  saveSelection();
   renderPicker();
   renderComparison();
 });
 
-document.querySelector('#clear-comparison').addEventListener('click', () => {
+document.querySelector('#clear-comparison')?.addEventListener('click', () => {
   selectedProducts.clear();
-  renderProducts();
+  saveSelection();
   renderPicker();
   renderComparison();
 });
@@ -164,7 +161,9 @@ document.querySelectorAll('#main-nav a').forEach(link => link.addEventListener('
   document.querySelector('#main-nav').classList.remove('nav-open');
 }));
 
-renderProducts();
-renderPicker();
-renderComparison();
+if (grid) renderProducts();
+if (comparisonPicker) {
+  renderPicker();
+  renderComparison();
+}
 
