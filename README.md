@@ -1,8 +1,10 @@
 # Perro Sénior
 
-Prototipo estático en español para una web de comparativas y guías de bienestar para perros adultos.
+Web estática en español con una selección de productos y comparador para perros adultos.
 
-El comparador incluye una primera selección de camas, escaleras, rampas, arneses, carrito, suplemento articular y productos de higiene. Los enlaces de Amazon son búsquedas ordinarias, no enlaces de afiliado ni garantía de disponibilidad. El comparador no muestra precios copiados: el usuario consulta el importe vigente en Amazon.
+El comparador incluye camas, rampa, arneses de apoyo, suplemento articular y pañal lavable. Permite seleccionar de dos a cuatro productos y ver sus detalles en una tabla. Los botones llevan a fichas de Amazon España mediante ASIN; todavía no incluyen etiqueta de afiliado.
+
+Las ilustraciones de producto son provisionales. Para mostrar imágenes oficiales de Amazon y datos de producto dinámicos hay que habilitar una cuenta de Afiliados y conectar sus herramientas oficiales (Creators API/PA API), respetando sus requisitos de actualización y visualización.
 
 ## Ejecutar
 
