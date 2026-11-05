@@ -4,13 +4,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#f7f5ef" />
-  <meta name="description" content="Compara productos para perros adultos: camas ortopédicas, rampas, arneses, suplementos e higiene. Elige dos, tres o cuatro y revisa sus detalles." />
+  <meta name="description" content="Productos seleccionados para perros adultos: camas ortopédicas, rampas, arneses, suplementos e higiene. Encuentra opciones y compáralas." />
   <title>Perro Sénior — Más cómodo cada día</title>
   <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=visual-compare-20261105" />
+  <link rel="stylesheet" href="styles.css?v=separate-comparator-20261105" />
 </head>
 <body>
   <div class="announcement"><span class="spark">✳</span> Guías honestas para una vida más cómoda juntos</div>
@@ -21,8 +21,8 @@
     </a>
     <button class="menu-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Abrir menú"><span></span><span></span></button>
     <nav id="main-nav" class="main-nav">
-      <a href="#productos">Productos</a><a href="#comparador">Comparador</a>
-      <a class="nav-cta" href="#productos">Ver selección <span>↗</span></a>
+      <a href="#productos">Productos</a><a href="comparador.html">Comparador</a>
+      <a class="nav-cta" href="comparador.html">Comparar productos <span>↗</span></a>
     </nav>
   </header>
 
@@ -32,7 +32,7 @@
         <div class="eyebrow"><span class="eyebrow-dot"></span> PRODUCTOS PARA PERROS ADULTOS</div>
         <h1>Más bienestar,<br /><em>a su ritmo.</em></h1>
         <p class="hero-lede">Una selección clara para ayudarle a descansar, moverse y cuidarse mejor.</p>
-        <div class="hero-actions"><a class="button button-dark" href="#productos">Ver productos <span>↓</span></a><a class="text-link" href="#comparador">Comparar opciones <span>↗</span></a></div>
+        <div class="hero-actions"><a class="button button-dark" href="comparador.html">Comparar productos <span>↗</span></a><a class="text-link" href="#productos">Ver catálogo <span>↓</span></a></div>
       </div>
       <div class="hero-art" aria-label="Ilustración de un perro mayor descansando cómodamente">
         <div class="sun-disc"></div><div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div>
@@ -48,23 +48,18 @@
       <div class="wrap">
         <div class="section-heading">
           <div><span class="section-kicker">SELECCIÓN PARA SU DÍA A DÍA</span><h2>Productos que pueden<br />hacer la vida <em>más fácil.</em></h2></div>
-          <p>Marca entre dos y cuatro opciones y compáralas con sus detalles a la vista.</p>
+          <p>Descubre camas, ayudas de movilidad, suplementos e higiene para distintas necesidades.</p>
         </div>
         <div class="compare-toolbar"><div class="filter-tabs" role="group" aria-label="Filtrar productos"><button class="filter active" data-filter="Todos">Todo</button><button class="filter" data-filter="Descanso">Descanso</button><button class="filter" data-filter="Movilidad">Movilidad</button><button class="filter" data-filter="Articulaciones">Articulaciones</button><button class="filter" data-filter="Higiene">Higiene</button></div></div>
         <div id="product-grid" class="product-grid" aria-live="polite"></div>
-        <section id="comparador" class="comparison-box" aria-live="polite">
-          <div class="comparison-heading"><div><span class="section-kicker">COMPARADOR DETALLADO</span><h2>Compara como en una tienda.</h2><p>Elige de dos a cuatro productos y mira sus diferencias en paralelo.</p></div><div class="compare-heading-actions"><span id="comparison-count" class="comparison-count">0 de 4 seleccionados</span><button id="clear-comparison" class="clear-comparison" type="button">Limpiar</button></div></div>
-          <div id="comparison-picker" class="comparison-picker" aria-label="Elegir productos para comparar"></div>
-          <div id="comparison-output" class="comparison-empty">Selecciona al menos dos productos para ver la comparación completa.</div>
-        </section>
         <div class="data-note"><span class="note-icon">i</span><p><b>Selección inicial, no consejo veterinario.</b> Confirma en Amazon la variante, talla, vendedor y disponibilidad. Los suplementos y las ayudas de movilidad deben elegirse según las necesidades del perro.</p></div>
-        <div class="affiliate-note">Fotos oficiales de Amazon pendientes de conexión a una cuenta de Afiliados habilitada. Los dibujos provisionales no representan fotografías del producto.</div>
+        <div class="affiliate-note">Las miniaturas son ilustraciones provisionales. Las fotos oficiales de Amazon requieren conexión autorizada a su programa de Afiliados.</div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer"><div class="wrap footer-main"><a class="brand footer-brand" href="#inicio"><img src="assets/logo.svg" alt="" width="40" height="40"/><span>Perro<span class="brand-light"> Sénior</span></span></a><p>Un lugar para elegir mejor<br />cómo acompañarles.</p><div class="footer-links"><a href="#productos">Productos</a><a href="#comparador">Comparador</a><a href="mailto:hola@perrosenior.es">Contacto</a></div><a class="back-top" href="#inicio">Volver arriba ↑</a></div><div class="wrap footer-bottom"><span>© 2026 Perro Sénior · Proyecto en desarrollo</span><span>Transparencia · Privacidad · Aviso legal</span></div></footer>
-  <script src="script.js?v=visual-compare-20261105"></script>
+  <footer class="site-footer"><div class="wrap footer-main"><a class="brand footer-brand" href="#inicio"><img src="assets/logo.svg" alt="" width="40" height="40"/><span>Perro<span class="brand-light"> Sénior</span></span></a><p>Un lugar para elegir mejor<br />cómo acompañarles.</p><div class="footer-links"><a href="#productos">Productos</a><a href="comparador.html">Comparador</a><a href="mailto:hola@perrosenior.es">Contacto</a></div><a class="back-top" href="#inicio">Volver arriba ↑</a></div><div class="wrap footer-bottom"><span>© 2026 Perro Sénior · Proyecto en desarrollo</span><span>Transparencia · Privacidad · Aviso legal</span></div></footer>
+  <script src="script.js?v=separate-comparator-20261105"></script>
 </body>
 </html>
 
