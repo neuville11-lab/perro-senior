@@ -112,7 +112,19 @@
 .comparison-table tbody tr:hover td{background:#fffaf0}
 .comparison-table thead th b{font-size:11px}
 .comparison-footnote{margin:0}
+.hero-actions .button-dark{min-height:54px;padding-inline:21px;font-size:13px;gap:19px;box-shadow:0 5px 14px #29483a1c}
+.compare-choice-link{display:inline-flex;align-items:center;justify-content:space-between;gap:8px;padding-top:11px;margin-top:11px;border-top:1px solid #eeece4;color:#536b56;font-size:9px;font-weight:700}
+.compare-choice-link span{font-size:13px;color:var(--orange)}
+.compare-choice-link:hover{color:#bc6f47}
+.comparison-main{min-height:70vh;background:#eff1e9;padding-bottom:68px}
+.comparison-page-intro{padding-top:48px;padding-bottom:24px}
+.back-to-products{display:inline-block;margin-bottom:28px;color:#657764;font-size:10px;font-weight:700}
+.comparison-page-intro h1{font-size:clamp(38px,5vw,58px);margin:12px 0 13px}
+.comparison-page-intro>p{max-width:560px;margin:0;color:#737a70;font-size:12px;line-height:1.7}
+.comparison-page .comparison-box{margin-top:0;margin-bottom:0;padding:28px;background:#fffefa;border-color:#e1e4dc}
+.comparison-page-note{margin-top:17px;padding-top:13px;border-top:1px solid #e8e9e2;color:#7b8176;font-size:9px;line-height:1.6}
+.comparison-page-note b{color:#526352}
 @media(max-width:900px){.comparison-picker{grid-template-columns:repeat(3,minmax(0,1fr))}.compare-heading-actions{align-self:flex-start}}
-@media(max-width:650px){.comparison-picker{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.picker-image{height:104px}.picker-info{min-height:106px;padding:9px}.comparison-heading{gap:11px}.compare-heading-actions{width:100%;justify-content:space-between}.comparison-products{min-width:600px}.comparison-product-image{height:132px}.comparison-results{margin-inline:-2px}}
+@media(max-width:650px){.comparison-picker{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.picker-image{height:104px}.picker-info{min-height:106px;padding:9px}.comparison-heading{gap:11px}.compare-heading-actions{width:100%;justify-content:space-between}.comparison-products{min-width:600px}.comparison-product-image{height:132px}.comparison-results{margin-inline:-2px}.comparison-page-intro{padding-top:32px}.comparison-page-intro h1{font-size:39px}.comparison-page .comparison-box{padding:18px 13px}.hero-actions .button-dark{min-height:51px;padding-inline:16px;font-size:11px}}
 .price-panel{min-height:300px;background:#f0f2eb;padding:27px;display:flex;flex-direction:column;justify-content:center}.price-status{display:flex;gap:13px;align-items:center;margin:26px 0 22px}.price-status>span{width:42px;height:42px;display:grid;place-items:center;border-radius:50%;background:#dce8d8;color:#5d7e61;font-size:22px}.price-status b,.price-status small,.history-box b,.history-box small{display:block}.price-status b,.history-box b{font-family:var(--display);font-size:13px;letter-spacing:-.02em}.price-status small,.history-box small{font-size:10px;color:#7b8177;margin-top:4px;line-height:1.55}.price-rule{border-top:1px solid #dce0d7}.history-box{display:flex;gap:13px;align-items:flex-start;padding:19px 0}.history-icon{width:35px;height:35px;flex:0 0 35px;border:1px solid #b6c4b1;border-radius:50%;display:grid;place-items:center;color:#718a6d;font-size:23px}.history-box a{display:inline-flex;gap:6px;align-items:center;margin-top:11px;padding-bottom:3px;border-bottom:1px solid #bcc8b7;font-size:10px;font-weight:700;color:#3f5b45}.history-box a span{color:#cc7958}.price-disclaimer{border-top:1px solid #dce0d7;padding-top:13px;color:#898e83;font-size:9px;line-height:1.55}
 
