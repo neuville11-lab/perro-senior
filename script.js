@@ -55,6 +55,7 @@ const selectedProducts = new Set();
 const grid = document.querySelector('#product-grid');
 const comparisonOutput = document.querySelector('#comparison-output');
 const comparisonPicker = document.querySelector('#comparison-picker');
+const comparisonCount = document.querySelector('#comparison-count');
 
 function art(type) {
   if (type === 'harness') return '<div class="illustration harness-illo"><span class="strap"></span><span class="strap s2"></span><span class="ring"></span><span class="support"></span></div>';
@@ -83,25 +84,22 @@ function renderProducts() {
 
 function renderComparison() {
   const chosen = products.filter(product => selectedProducts.has(product.id));
+  comparisonCount.textContent = `${chosen.length} de 4 seleccionados`;
   if (chosen.length < 2) {
     comparisonOutput.className = 'comparison-empty';
-    comparisonOutput.textContent = `Selecciona ${chosen.length === 0 ? 'dos' : 'un producto más'} para ver la comparación completa. Puedes elegir hasta cuatro.`;
+    comparisonOutput.innerHTML = `<span class="compare-empty-icon">⇄</span><b>${chosen.length === 0 ? 'Elige dos productos para empezar' : 'Añade un producto más'}</b><small>Verás miniaturas, enlaces y características en columnas paralelas.</small>`;
     return;
   }
   const rows = ['Categoría', ...new Set(chosen.flatMap(product => Object.keys(product.details)))];
-  comparisonOutput.className = 'comparison-table-wrap';
-  comparisonOutput.innerHTML = `<table class="comparison-table"><thead><tr><th scope="col">Detalle</th>${chosen.map(product => `<th scope="col"><span class="table-category">${product.category}</span><b>${product.name}</b><a href="${amazonProduct(product)}" target="_blank" rel="noopener noreferrer nofollow">Ver en Amazon ↗</a></th>`).join('')}</tr></thead><tbody>${rows.map(row => `<tr><th scope="row">${row}</th>${chosen.map(product => `<td>${row === 'Categoría' ? product.category : (product.details[row] || '—')}</td>`).join('')}</tr>`).join('')}</tbody></table><p class="comparison-footnote">La disponibilidad y las variantes pueden cambiar. Confirma los detalles en la ficha del producto.</p>`;
+  comparisonOutput.className = 'comparison-results';
+  comparisonOutput.innerHTML = `<div class="comparison-products-wrap"><div class="comparison-products" style="--compare-columns:${chosen.length}">${chosen.map(product => `<article class="comparison-product"><div class="comparison-product-image art-${product.type}">${art(product.type)}<span class="photo-note">Ilustración</span></div><div class="comparison-product-info"><span class="table-category">${product.category}</span><h3>${product.name}</h3><p class="compare-price">Precio: consultar en Amazon</p><a class="amazon-button" href="${amazonProduct(product)}" target="_blank" rel="noopener noreferrer nofollow">Ver en Amazon <span>↗</span></a><button class="remove-product" type="button" data-remove-product="${product.id}">Quitar</button></div></article>`).join('')}</div></div><div class="comparison-table-wrap"><table class="comparison-table"><thead><tr><th scope="col">Características</th>${chosen.map(product => `<th scope="col"><span class="table-category">${product.category}</span><b>${product.name}</b></th>`).join('')}</tr></thead><tbody>${rows.map(row => `<tr><th scope="row">${row}</th>${chosen.map(product => `<td>${row === 'Categoría' ? product.category : (product.details[row] || '—')}</td>`).join('')}</tr>`).join('')}</tbody></table></div><p class="comparison-footnote">La disponibilidad y las variantes cambian. Confirma los detalles en Amazon antes de comprar.</p>`;
 }
 
 function renderPicker() {
-  const selected = [...selectedProducts];
-  comparisonPicker.innerHTML = Array.from({ length: 4 }, (_, index) => {
-    const value = selected[index] || '';
-    const options = products.map(product => {
-      const usedElsewhere = selected.includes(product.id) && product.id !== value;
-      return `<option value="${product.id}" ${product.id === value ? 'selected' : ''} ${usedElsewhere ? 'disabled' : ''}>${product.name}</option>`;
-    }).join('');
-    return `<label class="compare-pick"><span>PRODUCTO ${index + 1}</span><select data-compare-slot="${index}" aria-label="Producto ${index + 1} para comparar"><option value="">${index < 2 ? 'Elige un producto' : 'Añadir otro (opcional)'}</option>${options}</select></label>`;
+  comparisonPicker.innerHTML = products.map(product => {
+    const isSelected = selectedProducts.has(product.id);
+    const isFull = selectedProducts.size >= 4 && !isSelected;
+    return `<article class="picker-card ${isSelected ? 'is-selected' : ''}"><div class="picker-image art-${product.type}">${art(product.type)}<span class="photo-note">Ilustración</span></div><div class="picker-info"><span class="table-category">${product.category}</span><b>${product.name}</b><button type="button" class="picker-action" data-picker-product="${product.id}" ${isFull ? 'disabled' : ''}>${isSelected ? 'Añadido ✓' : 'Añadir +'}</button></div></article>`;
   }).join('');
 }
 
@@ -128,11 +126,21 @@ grid.addEventListener('change', event => {
   renderComparison();
 });
 
-comparisonPicker.addEventListener('change', event => {
-  if (!event.target.matches('[data-compare-slot]')) return;
-  const values = [...comparisonPicker.querySelectorAll('[data-compare-slot]')].map(select => select.value).filter(Boolean);
-  selectedProducts.clear();
-  values.forEach(id => selectedProducts.add(id));
+comparisonPicker.addEventListener('click', event => {
+  const button = event.target.closest('[data-picker-product]');
+  if (!button || button.disabled) return;
+  const id = button.dataset.pickerProduct;
+  if (selectedProducts.has(id)) selectedProducts.delete(id);
+  else if (selectedProducts.size < 4) selectedProducts.add(id);
+  renderProducts();
+  renderPicker();
+  renderComparison();
+});
+
+comparisonOutput.addEventListener('click', event => {
+  const button = event.target.closest('[data-remove-product]');
+  if (!button) return;
+  selectedProducts.delete(button.dataset.removeProduct);
   renderProducts();
   renderPicker();
   renderComparison();
