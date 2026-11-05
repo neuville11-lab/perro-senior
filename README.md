@@ -1,4 +1,4 @@
-# Perro Sénior
+# Vida Perruna
 
 Web estática en español con un catálogo de productos y una página independiente de comparación para perros adultos.
 
@@ -17,6 +17,6 @@ Abre `index.html` en el navegador. No necesita dependencias ni proceso de compil
 - No almacenar ni presentar histórico propio de precios de Amazon sin autorización expresa. El prototipo plantea enlazar a un proveedor externo compatible y mostrar fecha y contexto cuando proceda.
 - Añadir avisos legales, privacidad y cookies adecuados antes de recoger datos o usar analítica.
 
-El nombre **Perro Sénior** y el logotipo SVG son una propuesta inicial pendiente de comprobar disponibilidad de marca y dominio.
+El nombre **Vida Perruna** y el logotipo SVG son una propuesta inicial pendiente de comprobar disponibilidad de marca y dominio.
 
 
