@@ -148,3 +148,18 @@
 
 
 .price-disclaimer{display:block;margin-top:5px;color:#7b857d;font-size:10px;line-height:1.45}.comparison-product-info .price-disclaimer{margin:-8px 0 12px;max-width:220px}
+
+
+/* Real, proximity-reactive dog in the homepage hero */
+.hero-art.hero-dog-scene{cursor:none;touch-action:pan-y}
+.hero-art.hero-dog-scene:focus-visible{outline:3px solid var(--moss);outline-offset:4px}
+.hero-dog{position:absolute;z-index:4;left:8%;bottom:11%;width:88%;aspect-ratio:3/2;transform:translateX(-48%);pointer-events:none;filter:drop-shadow(0 12px 10px #5a473327);transition:transform .18s ease-out}
+.hero-dog-state{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none;user-select:none;transition:opacity .18s ease-out,transform .2s ease-out}
+.hero-dog .dog-rest{opacity:calc(1 - var(--dog-interest,0))}
+.hero-dog .dog-alert{opacity:var(--dog-interest,0);transform:translateY(-3px) rotate(-.4deg) scale(1.01)}
+.hero-bone{position:absolute;z-index:9;left:0;top:0;width:52px;height:37px;opacity:0;pointer-events:none;transform:translate(-22%,-50%) rotate(-18deg);transition:opacity .16s ease-out}
+.hero-bone svg{display:block;width:100%;height:100%;filter:drop-shadow(0 2px 2px #30483b33)}
+.hero-bone.is-visible{opacity:1}
+@media(max-width:900px){.hero-dog{width:90%;left:5%;bottom:11%}}
+@media(max-width:650px){.hero-dog{width:90%;left:5%;bottom:11%}.hero-bone{width:48px;height:34px}}
+@media(prefers-reduced-motion:reduce){.hero-dog,.hero-dog-state,.hero-bone{transition:none!important}}
