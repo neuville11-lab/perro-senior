@@ -4,7 +4,7 @@ Web estática en español con un catálogo de productos y una página independie
 
 La portada reúne banner y catálogo. `comparador.html` permite seleccionar de dos a cuatro productos y ver sus detalles en columnas y tabla. Las tarjetas usan las fotos del catálogo actualizado y abren los enlaces de afiliado facilitados para cada producto. La selección se conserva al volver del catálogo.
 
-Los precios no están incluidos porque el catálogo no los proporcionaba; la web invita a consultar el precio y la disponibilidad actuales en Amazon. Para mostrar precios dinámicos hace falta acceso y conexión a la API oficial de Amazon Afiliados (Creators API/PA API), respetando sus requisitos vigentes.
+La web ya está preparada para consultar los precios actuales mediante Amazon Creators API, tanto en las tarjetas como en el comparador. GitHub Actions refresca el feed una vez al día y publica fecha/hora junto al precio; la vista previa del banner interactivo está en `preview-perro-interactivo.html` y no forma parte de la publicación.
 
 ## Ejecutar
 
@@ -13,8 +13,8 @@ Abre `index.html` en el navegador. No necesita dependencias ni proceso de compil
 ## Antes de publicar ofertas reales
 
 - Verificar que los enlaces de afiliado del catálogo abren los productos y atribuyen correctamente la cuenta.
-- Confirmar acceso y condiciones vigentes de Amazon Afiliados / Creators API para los datos que se quieran mostrar.
-- No almacenar ni presentar histórico propio de precios de Amazon sin autorización expresa. El prototipo plantea enlazar a un proveedor externo compatible y mostrar fecha y contexto cuando proceda.
+- Para activar los precios, obtener credenciales aprobadas de Creators API y guardar en **Settings → Secrets and variables → Actions** los secretos `AMAZON_CREATOR_CLIENT_ID`, `AMAZON_CREATOR_CLIENT_SECRET` y `AMAZON_PARTNER_TAG`. Nunca guardar las credenciales en archivos públicos ni compartirlas por chat.
+- La API entrega el precio vigente; no incluye un histórico. Cualquier histórico requerirá una fuente autorizada y cumplir las políticas de Amazon.
 - Añadir avisos legales, privacidad y cookies adecuados antes de recoger datos o usar analítica.
 
 El nombre **Vida Perruna** y el logotipo SVG son una propuesta inicial pendiente de comprobar disponibilidad de marca y dominio.
