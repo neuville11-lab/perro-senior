@@ -97,7 +97,6 @@ async function loadAmazonPrices() {
     if (!response.ok) return;
     amazonPrices = await response.json();
     if (grid) renderProducts();
-loadAmazonPrices();
     if (comparisonPicker) renderComparison();
   } catch { /* Keep the Amazon link as the price fallback if the feed is unavailable. */ }
 }
@@ -186,4 +185,5 @@ if (comparisonPicker) {
   renderPicker();
   renderComparison();
 }
+loadAmazonPrices();
 
