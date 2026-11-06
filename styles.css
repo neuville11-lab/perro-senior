@@ -163,3 +163,5 @@
 @media(max-width:900px){.hero-dog{width:90%;left:5%;bottom:11%}}
 @media(max-width:650px){.hero-dog{width:90%;left:5%;bottom:11%}.hero-bone{width:48px;height:34px}}
 @media(prefers-reduced-motion:reduce){.hero-dog,.hero-dog-state,.hero-bone{transition:none!important}}
+
+.hero-art.hero-dog-scene .hero-dog{left:8%;transform:none}
