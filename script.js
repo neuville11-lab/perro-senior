@@ -108,7 +108,7 @@ function renderProducts() {
     <div class="product-art art-${product.type}"><img class="product-photo" src="${product.image}" alt="${product.name}" loading="lazy" decoding="async"><span class="product-badge">${product.category.toUpperCase()}</span></div>
     <div class="product-info"><h3>${product.name}</h3><p>${product.summary}</p>
       <div class="product-detail"><span>ENCAJA SI</span><b>${product.ideal}</b></div>
-      <div class="product-footer"><span class="example-price">${currentPrice(product)}</span><a class="product-link" href="${amazonProduct(product)}" target="_blank" rel="sponsored nofollow noopener noreferrer">Ver producto en Amazon <span>↗</span></a></div>
+      <div class="product-footer"><span class="example-price">${currentPrice(product)}</span><a class="product-link" href="${amazonProduct(product)}" target="_blank" rel="sponsored nofollow noopener noreferrer">Ver producto en Amazon <span>↗</span></a></div><small class="price-disclaimer">Precio y disponibilidad pueden cambiar; en la compra se aplican los datos que muestre Amazon.</small>
       <div class="history-link">Ficha: <a href="${product.sourceUrl}" target="_blank" rel="noopener noreferrer">${product.source} ↗</a></div>
       <a class="compare-choice-link" href="comparador.html?producto=${product.id}#comparador">Comparar este producto <span>↗</span></a>
     </div></article>`).join('');
