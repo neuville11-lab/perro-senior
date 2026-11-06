@@ -42,7 +42,7 @@ const products = [
     source: 'Web oficial YuMOVE', sourceUrl: 'https://es.yumove.com/', rank: 6
   },
   {
-    id: 'simple-solution-diaper', name: 'Simple Solution pañal lavable', category: 'Higiene', type: 'diaper', asin: 'B0009YUDTU', image: 'assets/simple-solution-panal.jpg', affiliateUrl: 'https://link.amazon/B03GmTIAi',
+    id: 'simple-solution-diaper', name: 'Simple Solution pañal lavable', category: 'Higiene', type: 'diaper', asin: 'B0009YUDTU', image: 'assets/simple-solution-panal.png', affiliateUrl: 'https://link.amazon/B03GmTIAi',
     summary: 'Pañal reutilizable para perras con forro absorbente y ajuste regulable.',
     ideal: 'Gestión de escapes ocasionales cuando la causa ya se ha valorado con el veterinario.',
     details: { 'Tipo': 'Pañal lavable para perras', 'Tallas': 'Varias; mide la cintura junto a las patas traseras', 'Cierre': 'Bandas ajustables', 'Limpieza': 'Lavable; seguir indicaciones del fabricante', 'A tener en cuenta': 'Cambiarlo con frecuencia y mantener la piel limpia y seca.' },
