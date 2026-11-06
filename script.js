@@ -86,7 +86,7 @@ function renderProducts() {
   if (!grid) return;
   const visibleProducts = products.filter(product => currentFilter === 'Todos' || product.category === currentFilter);
   grid.innerHTML = visibleProducts.map((product, index) => `<article class="product-card" style="--delay:${index * 35}ms">
-    <div class="product-art art-${product.type}"><img class="product-photo" src="${product.image}" alt="${product.name}" loading="lazy" decoding="async"><span class="product-badge">${product.category.toUpperCase()}</span><span class="photo-note">Foto oficial pendiente</span></div>
+    <div class="product-art art-${product.type}"><img class="product-photo" src="${product.image}" alt="${product.name}" loading="lazy" decoding="async"><span class="product-badge">${product.category.toUpperCase()}</span></div>
     <div class="product-info"><h3>${product.name}</h3><p>${product.summary}</p>
       <div class="product-detail"><span>ENCAJA SI</span><b>${product.ideal}</b></div>
       <div class="product-footer"><span class="example-price">Precio: consultar en Amazon</span><a class="product-link" href="${amazonProduct(product)}" target="_blank" rel="sponsored nofollow noopener noreferrer">Ver producto en Amazon <span>↗</span></a></div>
