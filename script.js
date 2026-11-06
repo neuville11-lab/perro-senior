@@ -106,7 +106,7 @@ function renderProducts() {
   const visibleProducts = products.filter(product => currentFilter === 'Todos' || product.category === currentFilter);
   grid.innerHTML = visibleProducts.map((product, index) => `<article class="product-card" style="--delay:${index * 35}ms">
     <div class="product-art"><img class="product-photo" src="${product.image}" alt="${product.name}" loading="lazy" decoding="async"></div>
-    <div class="product-info"><h3>${product.name}</h3><a class="product-link product-button" href="${amazonProduct(product)}" target="_blank" rel="sponsored nofollow noopener noreferrer">Ver en Amazon</a></div>
+    <div class="product-info"><h3>${product.name}</h3><p class="product-summary">${product.summary}</p><a class="product-link product-button" href="${amazonProduct(product)}" target="_blank" rel="sponsored nofollow noopener noreferrer">Ver en Amazon</a></div>
   </article>`).join('');
 }
 
