@@ -209,7 +209,7 @@ loadAmazonPrices();
     const turn = Math.max(-1, Math.min(1, (x - noseX) / 170));
     const nod = Math.max(-1, Math.min(1, (y - noseY) / 145));
     dog.style.setProperty('--dog-interest', interest.toFixed(2));
-    dog.style.transform = 'translateX(calc(-48% + ' + (turn * 5) + 'px)) rotate(' + (turn * .7) + 'deg)';
+    dog.style.transform = 'translateX(' + (turn * 5) + 'px) rotate(' + (turn * .7) + 'deg)';
     alertImage.style.transform = 'translateY(' + (-3 - nod * 2) + 'px) rotate(' + (turn * -.6) + 'deg) scale(1.01)';
     bone.style.left = x + 'px';
     bone.style.top = y + 'px';
@@ -220,7 +220,7 @@ loadAmazonPrices();
     touchPinned = false;
     bone.classList.remove('is-visible');
     dog.style.setProperty('--dog-interest', '0');
-    dog.style.transform = 'translateX(-48%)';
+    dog.style.transform = 'none';
     alertImage.style.transform = '';
   }
 
