@@ -187,3 +187,69 @@ if (comparisonPicker) {
 }
 loadAmazonPrices();
 
+
+
+(() => {
+  const scene = document.querySelector('.hero-dog-scene');
+  if (!scene) return;
+  const dog = scene.querySelector('.hero-dog');
+  const alertImage = scene.querySelector('.dog-alert');
+  const bone = scene.querySelector('.hero-bone');
+  let touchTimer;
+  let touchPinned = false;
+
+  function setPoint(clientX, clientY) {
+    const rect = scene.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
+    const noseX = rect.width * .56;
+    const noseY = rect.height * .44;
+    const distance = Math.hypot(x - noseX, y - noseY);
+    const interest = Math.max(0, Math.min(1, (215 - distance) / 135));
+    const turn = Math.max(-1, Math.min(1, (x - noseX) / 170));
+    const nod = Math.max(-1, Math.min(1, (y - noseY) / 145));
+    dog.style.setProperty('--dog-interest', interest.toFixed(2));
+    dog.style.transform = 'translateX(calc(-48% + ' + (turn * 5) + 'px)) rotate(' + (turn * .7) + 'deg)';
+    alertImage.style.transform = 'translateY(' + (-3 - nod * 2) + 'px) rotate(' + (turn * -.6) + 'deg) scale(1.01)';
+    bone.style.left = x + 'px';
+    bone.style.top = y + 'px';
+    bone.classList.add('is-visible');
+  }
+
+  function reset() {
+    touchPinned = false;
+    bone.classList.remove('is-visible');
+    dog.style.setProperty('--dog-interest', '0');
+    dog.style.transform = 'translateX(-48%)';
+    alertImage.style.transform = '';
+  }
+
+  scene.addEventListener('pointermove', event => {
+    if (event.pointerType === 'touch') return;
+    clearTimeout(touchTimer);
+    setPoint(event.clientX, event.clientY);
+  });
+
+  scene.addEventListener('pointerleave', event => {
+    if (event.pointerType === 'touch' && touchPinned) return;
+    reset();
+  });
+
+  scene.addEventListener('pointerdown', event => {
+    setPoint(event.clientX, event.clientY);
+    if (event.pointerType === 'touch') {
+      touchPinned = true;
+      clearTimeout(touchTimer);
+      touchTimer = setTimeout(reset, 1000);
+    }
+  });
+
+  scene.addEventListener('keydown', event => {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    event.preventDefault();
+    const rect = scene.getBoundingClientRect();
+    setPoint(rect.left + rect.width * .6, rect.top + rect.height * .44);
+    clearTimeout(touchTimer);
+    touchTimer = setTimeout(reset, 1000);
+  });
+})();
