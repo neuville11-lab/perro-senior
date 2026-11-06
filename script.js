@@ -82,6 +82,26 @@ function amazonProduct(product) {
   return product.affiliateUrl || `https://www.amazon.es/dp/${product.asin}`;
 }
 
+let amazonPrices = { asOf: null, items: {} };
+
+function currentPrice(product) {
+  const entry = amazonPrices.items?.[product.asin];
+  if (!entry?.displayAmount || !amazonPrices.asOf) return 'Precio: consultar en Amazon';
+  const checked = new Intl.DateTimeFormat('es-ES', { dateStyle: 'short', timeStyle: 'short', timeZone: 'Europe/Madrid' }).format(new Date(amazonPrices.asOf));
+  return `Precio: ${entry.displayAmount} · actualizado ${checked}`;
+}
+
+async function loadAmazonPrices() {
+  try {
+    const response = await fetch(`prices.json?v=${Date.now()}`, { cache: 'no-store' });
+    if (!response.ok) return;
+    amazonPrices = await response.json();
+    if (grid) renderProducts();
+loadAmazonPrices();
+    if (comparisonPicker) renderComparison();
+  } catch { /* Keep the Amazon link as the price fallback if the feed is unavailable. */ }
+}
+
 function renderProducts() {
   if (!grid) return;
   const visibleProducts = products.filter(product => currentFilter === 'Todos' || product.category === currentFilter);
@@ -89,7 +109,7 @@ function renderProducts() {
     <div class="product-art art-${product.type}"><img class="product-photo" src="${product.image}" alt="${product.name}" loading="lazy" decoding="async"><span class="product-badge">${product.category.toUpperCase()}</span></div>
     <div class="product-info"><h3>${product.name}</h3><p>${product.summary}</p>
       <div class="product-detail"><span>ENCAJA SI</span><b>${product.ideal}</b></div>
-      <div class="product-footer"><span class="example-price">Precio: consultar en Amazon</span><a class="product-link" href="${amazonProduct(product)}" target="_blank" rel="sponsored nofollow noopener noreferrer">Ver producto en Amazon <span>↗</span></a></div>
+      <div class="product-footer"><span class="example-price">${currentPrice(product)}</span><a class="product-link" href="${amazonProduct(product)}" target="_blank" rel="sponsored nofollow noopener noreferrer">Ver producto en Amazon <span>↗</span></a></div>
       <div class="history-link">Ficha: <a href="${product.sourceUrl}" target="_blank" rel="noopener noreferrer">${product.source} ↗</a></div>
       <a class="compare-choice-link" href="comparador.html?producto=${product.id}#comparador">Comparar este producto <span>↗</span></a>
     </div></article>`).join('');
@@ -105,7 +125,7 @@ function renderComparison() {
   }
   const rows = ['Categoría', ...new Set(chosen.flatMap(product => Object.keys(product.details)))];
   comparisonOutput.className = 'comparison-results';
-  comparisonOutput.innerHTML = `<div class="comparison-products-wrap"><div class="comparison-products" style="--compare-columns:${chosen.length}">${chosen.map(product => `<article class="comparison-product"><div class="comparison-product-image art-${product.type}"><img class="product-photo" src="${product.image}" alt="${product.name}" loading="lazy" decoding="async"></div><div class="comparison-product-info"><span class="table-category">${product.category}</span><h3>${product.name}</h3><p class="compare-price">Precio: consultar en Amazon</p><a class="amazon-button" href="${amazonProduct(product)}" target="_blank" rel="sponsored nofollow noopener noreferrer">Ver en Amazon <span>↗</span></a><button class="remove-product" type="button" data-remove-product="${product.id}">Quitar</button></div></article>`).join('')}</div></div><div class="comparison-table-wrap"><table class="comparison-table"><thead><tr><th scope="col">Características</th>${chosen.map(product => `<th scope="col"><span class="table-category">${product.category}</span><b>${product.name}</b></th>`).join('')}</tr></thead><tbody>${rows.map(row => `<tr><th scope="row">${row}</th>${chosen.map(product => `<td>${row === 'Categoría' ? product.category : (product.details[row] || '—')}</td>`).join('')}</tr>`).join('')}</tbody></table></div><p class="comparison-footnote">La disponibilidad y las variantes cambian. Confirma los detalles en Amazon antes de comprar.</p>`;
+  comparisonOutput.innerHTML = `<div class="comparison-products-wrap"><div class="comparison-products" style="--compare-columns:${chosen.length}">${chosen.map(product => `<article class="comparison-product"><div class="comparison-product-image art-${product.type}"><img class="product-photo" src="${product.image}" alt="${product.name}" loading="lazy" decoding="async"></div><div class="comparison-product-info"><span class="table-category">${product.category}</span><h3>${product.name}</h3><p class="compare-price">${currentPrice(product)}</p><a class="amazon-button" href="${amazonProduct(product)}" target="_blank" rel="sponsored nofollow noopener noreferrer">Ver en Amazon <span>↗</span></a><button class="remove-product" type="button" data-remove-product="${product.id}">Quitar</button></div></article>`).join('')}</div></div><div class="comparison-table-wrap"><table class="comparison-table"><thead><tr><th scope="col">Características</th>${chosen.map(product => `<th scope="col"><span class="table-category">${product.category}</span><b>${product.name}</b></th>`).join('')}</tr></thead><tbody>${rows.map(row => `<tr><th scope="row">${row}</th>${chosen.map(product => `<td>${row === 'Categoría' ? product.category : (product.details[row] || '—')}</td>`).join('')}</tr>`).join('')}</tbody></table></div><p class="comparison-footnote">La disponibilidad y las variantes cambian. Confirma los detalles en Amazon antes de comprar.</p>`;
 }
 
 function renderPicker() {
