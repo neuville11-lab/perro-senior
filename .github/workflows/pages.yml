@@ -3,6 +3,8 @@ name: Publish static site
 on:
   push:
     branches: [main]
+  schedule:
+    - cron: '17 7 * * *'
   workflow_dispatch:
 
 permissions:
@@ -23,6 +25,12 @@ jobs:
     steps:
       - name: Check out source
         uses: actions/checkout@v4
+      - name: Refresh Amazon prices
+        run: node scripts/fetch-amazon-prices.mjs
+        env:
+          AMAZON_CREATOR_CLIENT_ID: ${{ secrets.AMAZON_CREATOR_CLIENT_ID }}
+          AMAZON_CREATOR_CLIENT_SECRET: ${{ secrets.AMAZON_CREATOR_CLIENT_SECRET }}
+          AMAZON_PARTNER_TAG: ${{ secrets.AMAZON_PARTNER_TAG }}
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload site artifact
@@ -32,3 +40,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
