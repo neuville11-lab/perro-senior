@@ -110,6 +110,30 @@ function renderProducts() {
   </article>`).join('');
 }
 
+function renderComparison() {
+  if (!comparisonPicker || !comparisonCount || !comparisonOutput) return;
+
+  const chosen = products.filter(product => selectedProducts.has(product.id));
+  comparisonCount.textContent = `${chosen.length} de 4 seleccionados`;
+
+  if (chosen.length < 2) {
+    comparisonOutput.className = 'comparison-empty';
+    comparisonOutput.innerHTML = `<span class="compare-empty-icon">⇄</span><b>${chosen.length === 0 ? 'Elige dos productos para empezar' : 'Añade un producto más'}</b><small>Selecciona al menos dos productos y verás sus características en paralelo.</small>`;
+    return;
+  }
+
+  const rows = ['Categoría', 'Descripción', 'Ideal para', ...new Set(chosen.flatMap(product => Object.keys(product.details || {})))];
+  const valueFor = (product, row) => {
+    if (row === 'Categoría') return product.category;
+    if (row === 'Descripción') return product.summary;
+    if (row === 'Ideal para') return product.ideal;
+    return product.details?.[row] || '—';
+  };
+
+  comparisonOutput.className = 'comparison-results';
+  comparisonOutput.innerHTML = `<div class="comparison-products-wrap"><div class="comparison-products" style="--compare-columns:${chosen.length}">${chosen.map(product => `<article class="comparison-product"><div class="comparison-product-image"><img class="product-photo" src="${product.image}" alt="${product.name}" loading="lazy" decoding="async"></div><div class="comparison-product-info"><span class="table-category">${product.category}</span><h3>${product.name}</h3><p class="compare-price">${currentPrice(product)}</p><a class="amazon-button" href="${amazonProduct(product)}" target="_blank" rel="sponsored nofollow noopener noreferrer">Ver en Amazon <span>↗</span></a><button class="remove-product" type="button" data-remove-product="${product.id}" aria-label="Quitar ${product.name} de la comparación">Quitar</button></div></article>`).join('')}</div></div><div class="comparison-table-wrap"><table class="comparison-table"><thead><tr><th scope="col">Características</th>${chosen.map(product => `<th scope="col"><span class="table-category">${product.category}</span><b>${product.name}</b></th>`).join('')}</tr></thead><tbody>${rows.map(row => `<tr><th scope="row">${row}</th>${chosen.map(product => `<td>${valueFor(product, row)}</td>`).join('')}</tr>`).join('')}</tbody></table></div><p class="comparison-footnote">Comprueba en Amazon la talla, la variante, el precio y la disponibilidad. Para productos de movilidad o suplementos, consulta al veterinario cuando sea necesario.</p>`;
+}
+
 function renderPicker() {
   comparisonPicker.innerHTML = products.map(product => {
     const isSelected = selectedProducts.has(product.id);
