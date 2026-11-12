@@ -3,7 +3,9 @@ import { writeFile } from 'node:fs/promises';
 const outputPath = new URL('../prices.json', import.meta.url);
 const asins = [
   'B0BNLWVPHD', 'B0859YRVFG', 'B08B32YPQH', 'B008EX52NU',
-  'B0B355XMH5', 'B003W5RRGU', 'B0009YUDTU'
+  'B0B355XMH5', 'B003W5RRGU', 'B0009YUDTU', 'B0GYZGBT6R',
+  'B07D5VWMQF', 'B00T25450U', 'B0BNMVS45Y', 'B0G4W273Z9',
+  'B0F8VXZCL7'
 ];
 
 function emptyPrices(asOf = new Date().toISOString()) {
