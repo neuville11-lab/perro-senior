@@ -38,3 +38,21 @@
 .post-updated{margin-top:18px!important;color:#85897f!important;font-size:10px!important}
 @media(max-width:760px){.post-hero{padding-top:32px}.post-hero h1{font-size:42px}.post-deck{font-size:13px}.post-cover img{aspect-ratio:16/9}.post-index{gap:6px}.post-index a{font-size:9px;padding:7px 9px}.post-layout{grid-template-columns:1fr;gap:14px;padding-top:18px}.post-toc{position:static;display:grid;grid-template-columns:1fr 1fr;gap:9px 13px}.post-toc .section-kicker{grid-column:1/-1}.post-content>p,.post-content section>p,.post-content li{font-size:13px}.post-product-section{padding:19px!important}}
 
+/* Forum experience post: compact, reduced-motion-aware route animation. */
+.forum-motion{margin:26px 0;padding:20px 22px;background:#eef1e9;border:1px solid #dfe5da;border-radius:5px}
+.forum-motion figcaption{display:flex;flex-direction:column;gap:5px;margin-bottom:14px;color:#405547;font-size:13px;line-height:1.6}
+.forum-motion figcaption span,.motion-note{color:#788074;font-size:10px}
+.motion-routes{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.motion-route{position:relative;min-width:0;height:126px;overflow:hidden;background:#fffefa;border:1px solid #e4e6de;border-radius:4px}
+.motion-label{position:absolute;z-index:2;top:10px;left:12px;color:#7a806f;font-size:9px;letter-spacing:.12em;text-transform:uppercase}
+.route-drawing{position:absolute;inset:16px 4px 0;width:calc(100% - 8px);height:calc(100% - 18px)}
+.route-base{fill:none;stroke:#bdc9b5;stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
+.route-dash{fill:none;stroke:#708b6e;stroke-width:2;stroke-dasharray:3 8;stroke-linecap:round;stroke-linejoin:round}
+.motion-paw{position:absolute;left:4%;bottom:4%;width:22px;height:22px;color:#c47a58;filter:drop-shadow(0 2px 1px #e7dfd2)}
+.ramp-paw{animation:ramp-paw-travel 5s ease-in-out infinite alternate}
+.step-paw{animation:step-paw-travel 5.5s ease-in-out infinite alternate}
+@keyframes ramp-paw-travel{0%{left:4%;bottom:4%}100%{left:86%;bottom:64%}}
+@keyframes step-paw-travel{0%{left:4%;bottom:4%}22%{left:22%;bottom:4%}34%{left:22%;bottom:24%}55%{left:45%;bottom:24%}67%{left:45%;bottom:44%}85%{left:68%;bottom:44%}100%{left:86%;bottom:64%}}
+.motion-note{display:block;margin-top:9px}
+@media(max-width:600px){.forum-motion{padding:16px 12px}.motion-routes{grid-template-columns:1fr}.motion-route{height:112px}}
+@media(prefers-reduced-motion:reduce){.motion-paw{animation:none;left:48%;bottom:42%}}
